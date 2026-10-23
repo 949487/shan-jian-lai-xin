@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>页面走丢了 | 山间来信</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("theme");
+        if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <main class="wrap">
+    <section class="about" style="text-align:center;padding-top:140px">
+      <div class="lead">404</div>
+      <h1>这封信寄错了地方</h1>
+      <p style="margin-top:24px">你要找的页面不存在，或者已经被时间带走了。</p>
+      <p style="margin-top:36px"><a href="index.html" style="color:var(--accent)">← 回到首页</a></p>
+    </section>
+  </main>
+</body>
+</html>

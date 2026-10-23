@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文章 | 山间来信</title>
+  <meta name="description" content="山间来信，一篇生活随笔。">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("theme");
+        if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html">山间<span>来信</span></a>
+      <nav class="nav">
+        <a href="index.html">首页</a>
+        <a href="about.html">关于</a>
+        <button class="theme-toggle" data-theme-toggle aria-label="切换主题">◐</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="article">
+    <div class="post-header">
+      <div class="post-kicker" id="post-kicker">随笔</div>
+      <h1 id="post-title">加载中…</h1>
+      <div class="post-submeta">
+        <span id="post-date"></span>
+        <span id="post-read"></span>
+      </div>
+    </div>
+
+    <figure class="post-hero" id="post-hero"></figure>
+
+    <article class="post-body" id="post-content"></article>
+
+    <footer class="post-footer" id="post-footer">
+      <div class="post-tags" id="post-tags"></div>
+      <div class="post-nav" id="post-nav"></div>
+    </footer>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span>© 2026 山间来信 · 用文字留住时间</span>
+      <a href="index.html">← 回到首页</a>
+    </div>
+  </footer>
+
+  <button class="to-top" aria-label="回到顶部">↑</button>
+
+  <script src="data/posts.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

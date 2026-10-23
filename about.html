@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>关于 | 山间来信</title>
+  <meta name="description" content="关于山间来信，与写这些字的人。">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("theme");
+        if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html">山间<span>来信</span></a>
+      <nav class="nav">
+        <a href="index.html">首页</a>
+        <a href="about.html">关于</a>
+        <button class="theme-toggle" data-theme-toggle aria-label="切换主题">◐</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="about">
+      <div class="lead">About this blog</div>
+      <h1>关于这封信</h1>
+      <p>这个博客叫「山间来信」。名字是随手起的，大概是因为我总觉得，写下来的东西应该像一封从很远的地方寄来的信：不急，不吵，到了就放在门口，你有空再看。</p>
+      <p>这里写的主要是普通日子里的小事。清晨的菜市场、下雨天的旧书店、阳台上终于活下来的植物、还有一些想起来会停顿一下的人。它们大多不值得上新闻，但我相信，生活就是由这些不值一提的部分组成的。</p>
+      <p>我不太会写宏大的东西。对我来说，把一件小事写清楚，比把一件大事写得漂亮要难得多，也要紧得多。</p>
+      <hr>
+      <p>如果你想联系我，可以给我写信：<a href="mailto:hello@example.com">hello@example.com</a>。或者只是偶尔来坐坐，也很好。</p>
+      <p class="sign">—— 山间来信</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span>© 2026 山间来信 · 用文字留住时间</span>
+      <span>Built with plain HTML &amp; CSS</span>
+    </div>
+  </footer>
+
+  <button class="to-top" aria-label="回到顶部">↑</button>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

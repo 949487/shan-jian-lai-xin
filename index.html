@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>山间来信 | 生活随笔</title>
+  <meta name="description" content="山间来信 —— 一个记录日常、城市、记忆与植物的生活随笔博客。">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("theme");
+        if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html">山间<span>来信</span></a>
+      <nav class="nav">
+        <a href="index.html">首页</a>
+        <a href="about.html">关于</a>
+        <button class="theme-toggle" data-theme-toggle aria-label="切换主题">◐</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="wrap hero">
+      <div class="hero-eyebrow">Essays on ordinary days</div>
+      <h1>把日子过成<br><em>一封慢信</em></h1>
+      <p>记录菜市场的清晨、旧书店的雨、阳台上活下来的植物，以及那些没有说出口的话。不追热点，只写还在心里的事。</p>
+      <div class="hero-meta">
+        <div><b id="stat-count">0</b>篇文章</div>
+        <div><b>2026</b>年开始写</div>
+        <div><b>不定</b>期更新</div>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <div class="toolbar">
+        <div class="filters" id="filters"></div>
+        <label class="search">
+          <span>搜索</span>
+          <input id="search" type="search" placeholder="标题 / 标签 / 关键词">
+        </label>
+      </div>
+      <div class="post-grid" id="post-list"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span>© 2026 山间来信 · 用文字留住时间</span>
+      <span>Built with plain HTML &amp; CSS</span>
+    </div>
+  </footer>
+
+  <button class="to-top" aria-label="回到顶部">↑</button>
+
+  <script src="data/posts.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    document.getElementById("stat-count").textContent = window.POSTS.length;
+  </script>
+</body>
+</html>
