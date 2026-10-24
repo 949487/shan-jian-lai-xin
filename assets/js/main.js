@@ -49,8 +49,11 @@
 
   applyTheme(root.dataset.theme || "light", false);
 
+  var themeBusy = false;
+
   $$("[data-theme-toggle]").forEach(function (btn) {
     btn.addEventListener("click", function (e) {
+      if (themeBusy) return;
       var next = root.dataset.theme === "dark" ? "light" : "dark";
 
       if (reduceMotion || !document.startViewTransition) {
@@ -62,8 +65,9 @@
       root.style.setProperty("--vt-x", (rect.left + rect.width / 2) + "px");
       root.style.setProperty("--vt-y", (rect.top + rect.height / 2) + "px");
 
+      themeBusy = true;
       var transition = document.startViewTransition(function () { applyTheme(next, true); });
-      transition.finished.catch(function () {});
+      transition.finished.then(function () { themeBusy = false; }, function () { themeBusy = false; });
     });
   });
 
