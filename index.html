@@ -4,68 +4,145 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>山间来信 | 生活随笔</title>
-  <meta name="description" content="山间来信 —— 一个记录日常、城市、记忆与植物的生活随笔博客。">
+  <meta name="description" content="山间来信 —— 一个记录日常、城市、记忆与植物的生活随笔博客。不追热点，只写还在心里的事。">
+  <meta name="theme-color" content="#faf6ec">
+  <meta property="og:title" content="山间来信 | 生活随笔">
+  <meta property="og:description" content="不追热点，只写还在心里的事。">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/css/style.css">
   <script>
     (function () {
+      document.documentElement.classList.add("js");
       try {
         var t = localStorage.getItem("theme");
         if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
         document.documentElement.dataset.theme = t;
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.content = t === "dark" ? "#0f120f" : "#faf6ec";
       } catch (e) {}
     })();
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#main">跳到正文</a>
 
-  <header class="site-header">
-    <div class="wrap header-inner">
-      <a class="brand" href="index.html">山间<span>来信</span></a>
-      <nav class="nav">
-        <a href="index.html">首页</a>
+  <header class="site-header" id="site-header">
+    <div class="header-bar glass">
+      <a class="brand" href="index.html" aria-label="山间来信 · 首页">
+        <span class="brand-mark" aria-hidden="true">山</span>
+        <span class="brand-text">山间<span>来信</span></span>
+      </a>
+      <nav class="nav" aria-label="主导航">
+        <a href="index.html" class="is-active" aria-current="page">来信</a>
         <a href="about.html">关于</a>
-        <button class="theme-toggle" data-theme-toggle aria-label="切换主题">◐</button>
       </nav>
+      <div class="header-actions">
+        <button class="icon-btn ripple" data-theme-toggle type="button" aria-label="切换深色模式">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.2"/>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a7 7 0 0 0 10.7 10.7Z"/>
+          </svg>
+        </button>
+      </div>
     </div>
   </header>
 
-  <main>
-    <section class="wrap hero">
-      <div class="hero-eyebrow">Essays on ordinary days</div>
-      <h1>把日子过成<br><em>一封慢信</em></h1>
-      <p>记录菜市场的清晨、旧书店的雨、阳台上活下来的植物，以及那些没有说出口的话。不追热点，只写还在心里的事。</p>
-      <div class="hero-meta">
-        <div><b id="stat-count">0</b>篇文章</div>
-        <div><b>2026</b>年开始写</div>
-        <div><b>不定</b>期更新</div>
+  <main id="main">
+    <section class="hero wrap">
+      <div class="hero-copy">
+        <div class="eyebrow reveal"><span class="pulse-dot" aria-hidden="true"></span>Essays on ordinary days</div>
+        <h1 class="reveal" style="--i:1">把日子过成<br><em>一封慢信</em></h1>
+        <p class="hero-lead reveal" style="--i:2">记录菜市场的清晨、旧书店的雨、阳台上活下来的植物，以及那些没有说出口的话。不追热点，只写还在心里的事。</p>
+        <div class="hero-stats reveal" style="--i:3">
+          <div class="stat glass"><b id="stat-count">0</b><span>篇来信</span></div>
+          <div class="stat glass"><b>2026</b><span>年开始写</span></div>
+          <div class="stat glass"><b>不定</b><span>期更新</span></div>
+        </div>
+      </div>
+
+      <div class="hero-letter reveal" style="--i:2" aria-hidden="true">
+        <div class="letter-card letter-card--back"></div>
+        <div class="letter-card">
+          <div class="letter-top">
+            <span class="stamp">山</span>
+            <span class="postmark">2026<br>秋<br>SHAN JIAN</span>
+          </div>
+          <p class="letter-line">见字如面。</p>
+          <p class="letter-body">这里是山间来信。写的都是些小事：一顿饭、一场雨、一盆终于活下来的薄荷。它们不值得上新闻，但构成了日子本身。</p>
+          <div class="letter-foot">
+            <span>TO：你</span>
+            <span>FROM：山间</span>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="wrap">
-      <div class="toolbar">
-        <div class="filters" id="filters"></div>
-        <label class="search">
-          <span>搜索</span>
-          <input id="search" type="search" placeholder="标题 / 标签 / 关键词">
-        </label>
+    <section class="wrap section" id="latest" aria-labelledby="latest-title">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Latest letter</div>
+          <h2 id="latest-title">最新一封</h2>
+        </div>
+        <div class="result-meta" id="featured-meta"></div>
       </div>
+      <div id="featured"></div>
+    </section>
+
+    <section class="wrap section" id="archive" aria-labelledby="archive-title">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Archive</div>
+          <h2 id="archive-title">来信归档</h2>
+          <p>按主题翻一翻，或者直接写下你想找的词。按 <kbd>/</kbd> 可以快速搜索。</p>
+        </div>
+        <p class="result-meta" id="result-meta" aria-live="polite"></p>
+      </div>
+
+      <div class="toolbar">
+        <div class="chips" id="filters" aria-label="按标签筛选"></div>
+        <div class="search-field" id="search-field">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="6.5"/>
+            <path d="m16 16 4.5 4.5"/>
+          </svg>
+          <input id="search" type="search" placeholder="搜索标题、标签或正文" aria-label="搜索文章" autocomplete="off">
+          <kbd class="search-kbd">/</kbd>
+          <button class="search-clear ripple" id="search-clear" type="button" aria-label="清空搜索">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <path d="M6 6l12 12M18 6 6 18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
       <div class="post-grid" id="post-list"></div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="wrap footer-inner">
-      <span>© 2026 山间来信 · 用文字留住时间</span>
-      <span>Built with plain HTML &amp; CSS</span>
+    <div class="footer-bar glass">
+      <div class="footer-brand"><i aria-hidden="true">山</i>山间来信</div>
+      <div class="footer-links">
+        <span>© <span id="year">2026</span> · 用文字留住时间</span>
+        <a href="about.html">关于</a>
+        <a href="https://github.com/949487" target="_blank" rel="noopener">GitHub</a>
+      </div>
     </div>
   </footer>
 
-  <button class="to-top" aria-label="回到顶部">↑</button>
+  <div class="fab-stack">
+    <button class="fab ripple" id="to-top" type="button" data-tooltip="回到顶部" aria-label="回到顶部">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 19V5M5 12l7-7 7 7"/>
+      </svg>
+    </button>
+  </div>
 
   <script src="data/posts.js"></script>
   <script src="assets/js/main.js"></script>
-  <script>
-    document.getElementById("stat-count").textContent = window.POSTS.length;
-  </script>
 </body>
 </html>
