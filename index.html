@@ -10,7 +10,7 @@
   <meta property="og:description" content="不追热点，只写还在心里的事。">
   <meta property="og:type" content="website">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/style.css?v=2">
+  <link rel="stylesheet" href="assets/css/style.css?v=3">
   <script>
     (function () {
       document.documentElement.classList.add("js");
@@ -54,7 +54,7 @@
   <main id="main">
     <section class="hero wrap">
       <div class="hero-copy">
-        <div class="eyebrow reveal"><span class="pulse-dot" aria-hidden="true"></span>Essays on ordinary days</div>
+        <div class="eyebrow eyebrow--quote reveal"><span class="pulse-dot" aria-hidden="true"></span><span class="quote-text" id="hero-quote">「行到水穷处，坐看云起时」<span class="quote-author"> · 王维</span></span></div>
         <h1 class="reveal" style="--i:1">把日子过成<br><em>一封慢信</em></h1>
         <p class="hero-lead reveal" style="--i:2">记录菜市场的清晨、旧书店的雨、阳台上活下来的植物，以及那些没有说出口的话。不追热点，只写还在心里的事。</p>
         <div class="hero-stats reveal" style="--i:3">
@@ -79,6 +79,30 @@
           </div>
         </div>
       </div>
+    </section>
+
+    <section class="wrap section" id="daily" aria-labelledby="daily-title">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Daily reading</div>
+          <h2 id="daily-title">今日一文</h2>
+          <p>每天零点换一篇公有领域的旧文。文字据通行版本校录，读慢一点。</p>
+        </div>
+        <p class="result-meta" id="daily-date"></p>
+      </div>
+
+      <article class="daily-card glass reveal" id="daily-card">
+        <header class="daily-head">
+          <p class="daily-era" id="daily-era"></p>
+          <h3 id="daily-title-text"></h3>
+          <p class="daily-author" id="daily-author"></p>
+        </header>
+        <div class="daily-body" id="daily-body"></div>
+        <footer class="daily-foot">
+          <span id="daily-source"></span>
+          <span class="daily-count" id="daily-count"></span>
+        </footer>
+      </article>
     </section>
 
     <section class="wrap section" id="latest" aria-labelledby="latest-title">
@@ -142,7 +166,8 @@
     </button>
   </div>
 
-  <script src="data/posts.js"></script>
-  <script src="assets/js/main.js?v=2"></script>
+  <script src="data/daily.js?v=3"></script>
+  <script src="data/posts.js?v=3"></script>
+  <script src="assets/js/main.js?v=3"></script>
 </body>
 </html>

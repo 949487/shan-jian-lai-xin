@@ -397,6 +397,90 @@
     observeReveals(document);
   }
 
+  /* ---------------- 每日一文 / 今日诗句 ---------------- */
+  function cstNow() { return new Date(Date.now() + 8 * 3600 * 1000); }
+
+  function pad2(n) { return n < 10 ? "0" + n : String(n); }
+
+  function dayKey() {
+    var d = cstNow();
+    return d.getUTCFullYear() + "-" + pad2(d.getUTCMonth() + 1) + "-" + pad2(d.getUTCDate());
+  }
+
+  function renderDaily() {
+    var list = window.DAILY_TEXTS || [];
+    var card = $("#daily-card");
+    if (!list.length || !card) return;
+
+    // 以北京时间计算天数；步长 5 与 12 互质，保证每天不同、12 天走完一轮
+    var d = cstNow();
+    var days = Math.floor(d.getTime() / 86400000);
+    var idx = ((days * 5) % list.length + list.length) % list.length;
+    var item = list[idx];
+
+    $("#daily-date").textContent = d.getUTCFullYear() + "." + pad2(d.getUTCMonth() + 1) + "." +
+      pad2(d.getUTCDate()) + " · 周" + "日一二三四五六".charAt(d.getUTCDay());
+    $("#daily-era").textContent = item.era + " · 古文";
+    $("#daily-title-text").textContent = item.title;
+    $("#daily-author").textContent = item.author;
+    $("#daily-body").innerHTML = item.content;
+    $("#daily-source").textContent = "公有领域 · " + item.source;
+    $("#daily-count").textContent = "第 " + (idx + 1) + " / " + list.length + " 篇";
+  }
+
+  function initHeroQuote() {
+    var el = $("#hero-quote");
+    if (!el) return;
+
+    var key = "hitokoto:" + dayKey();
+
+    function apply(text, author) {
+      el.textContent = "「" + text + "」";
+      if (author) {
+        var span = document.createElement("span");
+        span.className = "quote-author";
+        span.textContent = " · " + author;
+        el.appendChild(span);
+      }
+    }
+
+    function readCache() {
+      try {
+        var raw = localStorage.getItem(key);
+        var data = raw ? JSON.parse(raw) : null;
+        if (data && data.text) {
+          apply(data.text, data.author);
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
+    if (readCache() || !window.fetch) return;
+
+    var ctrl = window.AbortController ? new AbortController() : null;
+    var timer = ctrl ? window.setTimeout(function () { ctrl.abort(); }, 6000) : null;
+
+    fetch("https://v1.hitokoto.cn/?c=i&encode=json&charset=utf-8", ctrl ? { signal: ctrl.signal } : undefined)
+      .then(function (res) {
+        if (!res.ok) throw new Error("hitokoto " + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        if (!data || !data.hitokoto) return;
+        var author = data.from_who || data.from || "";
+        apply(data.hitokoto, author);
+        try {
+          localStorage.setItem(key, JSON.stringify({ text: data.hitokoto, author: author }));
+        } catch (e) {}
+      })
+      .catch(function () {})
+      .then(function () { if (timer) window.clearTimeout(timer); });
+  }
+
+  renderDaily();
+  initHeroQuote();
+
   /* ---------------- 文章页 ---------------- */
   var article = $("#post-content");
 

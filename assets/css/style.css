@@ -415,6 +415,20 @@ button { cursor: pointer; }
   color: var(--on-surface-variant);
 }
 
+/* 顶部诗句：由「一言」接口填充，保留固定行高避免加载时跳动 */
+.eyebrow--quote {
+  align-items: flex-start;
+  gap: 12px;
+  font-size: .8rem;
+  font-weight: 400;
+  letter-spacing: .02em;
+  text-transform: none;
+  line-height: 1.8;
+}
+.eyebrow--quote .pulse-dot { margin-top: 7px; flex: none; }
+.eyebrow--quote .quote-text { max-width: 560px; }
+.eyebrow--quote .quote-author { opacity: .72; }
+
 .pulse-dot {
   width: 8px;
   height: 8px;
@@ -631,6 +645,90 @@ button { cursor: pointer; }
   font-size: .75rem;
   letter-spacing: .1em;
   color: var(--on-surface-variant);
+}
+
+/* ---------- 每日一文（公有领域） ---------- */
+.daily-card {
+  position: relative;
+  max-width: 1008px;
+  margin: 0 auto;
+  padding: 46px 54px 30px;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+}
+.daily-card::before {
+  content: "文";
+  position: absolute;
+  top: 12px;
+  right: 34px;
+  font-family: var(--serif);
+  font-size: 10rem;
+  line-height: 1;
+  color: var(--primary);
+  opacity: .05;
+  pointer-events: none;
+}
+.daily-head {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--hairline);
+}
+.daily-era {
+  margin: 0;
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .2em;
+  color: var(--secondary);
+}
+.daily-head h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-weight: 600;
+  line-height: 1.4;
+}
+.daily-author {
+  margin: 0;
+  font-size: .8rem;
+  letter-spacing: .1em;
+  color: var(--on-surface-variant);
+}
+.daily-body {
+  position: relative;
+  max-width: 760px;
+  padding-top: 24px;
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 2.1;
+  color: var(--on-surface);
+}
+.daily-body p {
+  margin: 0 0 1em;
+  text-align: justify;
+}
+.daily-body p:last-child { margin-bottom: 0; }
+.daily-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 26px;
+  padding-top: 16px;
+  border-top: 1px solid var(--hairline);
+  font-size: .68rem;
+  letter-spacing: .08em;
+  color: var(--on-surface-variant);
+}
+.daily-count { opacity: .7; }
+
+@media (max-width: 680px) {
+  .daily-card { padding: 28px 22px 22px; border-radius: var(--r-lg); }
+  .daily-card::before { font-size: 6.5rem; right: 16px; top: 10px; }
+  .daily-era { letter-spacing: .14em; }
+  .daily-body { padding-top: 18px; font-size: .98rem; line-height: 1.95; }
+  .eyebrow--quote { font-size: .76rem; }
 }
 
 /* ---------- Featured ---------- */
