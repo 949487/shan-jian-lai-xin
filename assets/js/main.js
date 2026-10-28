@@ -18,6 +18,13 @@
 
   function fmtDate(d) { return String(d).replace(/-/g, "."); }
 
+  function yearOf(d) { return String(d).slice(0, 4); }
+
+  function seasonOf(d) {
+    var m = Number(String(d).slice(5, 7));
+    return (m === 12 || m <= 2) ? "冬" : m <= 5 ? "春" : m <= 8 ? "夏" : "秋";
+  }
+
   function plainText(html) { return String(html || "").replace(/<[^>]*>/g, " "); }
 
   function readingTime(post) {
@@ -255,9 +262,14 @@
       var cover = post.cover
         ? '<img src="' + esc(post.cover) + '" alt="" loading="eager" decoding="async">'
         : "";
-      return '<a class="feature-card glass reveal" href="post.html?slug=' + encodeURIComponent(post.slug) + '">' +
+      return '<a class="feature-card paper reveal" href="post.html?slug=' + encodeURIComponent(post.slug) + '">' +
         '<div class="feature-media">' + cover + '<span class="feature-badge">最新一封</span></div>' +
         '<div class="feature-content">' +
+        '<div class="paper-mark" aria-hidden="true">' +
+        '<span class="paper-stamp">山</span>' +
+        '<span class="paper-postmark"><b>' + yearOf(post.date) + '</b><span>' + seasonOf(post.date) +
+        '</span><em>SHAN JIAN</em></span>' +
+        "</div>" +
         '<span class="post-kicker">' + esc((post.tags || [])[0] || "随笔") + "</span>" +
         "<h2>" + esc(post.title) + "</h2>" +
         "<p>" + esc(post.excerpt) + "</p>" +
@@ -269,12 +281,13 @@
     function postCard(post, i) {
       var cover = post.cover
         ? '<div class="post-cover"><img src="' + esc(post.cover) + '" alt="" loading="lazy" decoding="async">' +
+          '<span class="card-stamp" aria-hidden="true">山</span>' +
           '<span class="cover-tag">' + esc((post.tags || [])[0] || "随笔") + "</span></div>"
         : '<div class="post-cover"></div>';
       var tagLine = (post.tags || []).slice(0, 2).map(function (t) {
         return "<span>#" + esc(t) + "</span>";
       }).join("");
-      return '<a class="post-card glass reveal" style="--i:' + (i % 6) + '" href="post.html?slug=' +
+      return '<a class="post-card paper reveal" style="--i:' + (i % 6) + '" href="post.html?slug=' +
         encodeURIComponent(post.slug) + '">' + cover +
         '<div class="post-card-body">' +
         '<div class="post-meta"><span>' + fmtDate(post.date) + '</span><span class="dot">·</span><span>' +
