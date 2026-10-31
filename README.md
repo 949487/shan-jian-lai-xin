@@ -6,7 +6,8 @@
 
 ## 特点
 
-- Material Design 3 + 玻璃质感：半透明毛玻璃卡片、流动色斑背景、纸纹颗粒
+- Material Design 3 + 液态玻璃质感：多层渐变玻璃、双侧内高光、暗色下边框、表面扫光，参考 [luci-theme-liquid](https://github.com/zzsj0928/luci-theme-liquid)
+- 流动彩色色斑背景 + 纸纹颗粒；深色模式单独提亮玻璃，避免变成灰块
 - 浅色 / 深色主题切换，带圆形扩散过渡动画（记忆用户选择）
 - 顶部胶囊导航随滚动收缩，浮动按钮按滚动方向自动收放
 - 首页两列文章卡片，支持标签筛选（带计数）与关键词搜索（`/` 快捷聚焦、`Esc` 清空）
@@ -60,3 +61,16 @@ python3 -m http.server 8080
 ## 部署
 
 仓库 Settings → Pages 已配置为 `main` 分支根目录，推送后约 1 分钟生效。
+
+## 液态玻璃模板
+
+通用玻璃 token、组件配方与踩坑记录已整理为 `liquid-glass` 技能：
+
+```text
+.trae/skills/liquid-glass/
+├── SKILL.md                     何时使用、设计原则、组件配方、验收清单
+├── assets/liquid-glass.css      可直接复制的 token + .liquid-glass 组件
+└── references/luci-theme-liquid.md  参考主题取值与实现要点
+```
+
+本站的具体实现见 `assets/css/style.css` 顶部的 `--glass-*` / `--paper-*` 令牌。
