@@ -13,10 +13,13 @@
 - 首页两列文章卡片，支持标签筛选（带计数）与关键词搜索（`/` 快捷聚焦、`Esc` 清空）
 - 「今日一文」每天零点自动轮换一篇公有领域古文，按北京时间计算，无需构建或后端
 - 顶部诗句取自 [Hitokoto](https://hitokoto.cn/) 诗词分类，按日缓存，失败时回退静态诗句
-- 文章页：滚动进度条、桌面侧边目录 / 移动端横向目录、滚动高亮、首字下沉、玻璃引用块、上一篇 / 下一篇、复制链接与分享
+- 文章页：滚动进度条、桌面侧边目录 / 移动端横向目录、滚动高亮、首字下沉、玻璃引用块、上一篇 / 下一篇、相关文章、复制链接与分享
 - 滚动揭示动画、涟漪反馈、Toast 提示，并支持 `prefers-reduced-motion`
-- 移动端适配，封面图与图标本地存储
-- 不依赖任何框架或第三方 CDN
+- 移动端适配：顶栏与浮动按钮自动降级为近实底，色斑动画关闭，降低绘制开销
+- 打印样式：只保留文章正文，隐藏导航、目录与浮动按钮
+- SEO：canonical、Open Graph / Twitter 卡片、文章页 JSON-LD、`sitemap.xml`、`robots.txt`、RSS
+- 关闭 JavaScript 时给出提示与首页入口
+- 封面图与图标本地存储，不依赖任何框架或第三方 CDN
 
 ## 目录结构
 
@@ -28,8 +31,11 @@ about.html          关于页
 data/posts.js       全部文章数据（标题、日期、标签、封面、正文）
 data/daily.js       「今日一文」公有领域文本库（按日期轮换）
 assets/css/style.css  样式（MD3 设计令牌 + 玻璃组件）
-assets/js/main.js     列表渲染、筛选、搜索、主题、文章渲染与目录
+assets/js/main.js     列表渲染、筛选、搜索、主题、文章渲染、目录与相关文章
 assets/img/          文章封面与 favicon.svg
+feed.xml            RSS 订阅（新增文章时手动补一条 item）
+sitemap.xml         站点地图
+robots.txt          爬虫规则
 ```
 
 ## 新增文章
@@ -49,7 +55,8 @@ assets/img/          文章封面与 favicon.svg
 ```
 
 2. 把封面图放进 `assets/img/`
-3. 提交并推送，Pages 会自动重新构建
+3. 同步补充 `feed.xml` 与 `sitemap.xml` 中的对应条目
+4. 提交并推送，Pages 会自动重新构建
 
 ## 本地预览
 

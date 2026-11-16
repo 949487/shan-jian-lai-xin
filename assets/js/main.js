@@ -34,6 +34,9 @@
     return Math.max(1, Math.round((cjk + words * 1.6) / 340));
   }
 
+  var SITE_BASE = "https://949487.github.io/shan-jian-lai-xin/";
+  var SITE_NAME = "山间来信";
+
   var ICON = {
     check: '<svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>',
     arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
@@ -90,6 +93,14 @@
   var lastY = 0;
   var mobileQuery = window.matchMedia("(max-width: 680px)");
 
+  // 与 CSS 的 scroll-padding-top 保持一致，锚点跳转和目录高亮才不会错位
+  function readScrollPad() {
+    var v = parseFloat(window.getComputedStyle(root).scrollPaddingTop);
+    return isNaN(v) ? 96 : v;
+  }
+  var scrollPad = readScrollPad();
+  window.addEventListener("resize", function () { scrollPad = readScrollPad(); }, { passive: true });
+
   function highlightToc(active) {
     tocLinks.forEach(function (a) {
       a.classList.toggle("is-active", a.getAttribute("href") === "#" + active.id);
@@ -115,8 +126,8 @@
     }
 
     if (tocHeads.length && !tocLocked) {
-      // 与 scroll-padding-top 对齐，标题落到顶栏下方即视为当前小节
-      var offset = (header ? header.offsetHeight : 68) + 46;
+      // 标题滚到顶栏下方留白处即视为当前小节
+      var offset = scrollPad + 8;
       var active = tocHeads[0];
       for (var i = 0; i < tocHeads.length; i++) {
         if (tocHeads[i].getBoundingClientRect().top <= offset) active = tocHeads[i];
@@ -342,7 +353,8 @@
 
       if (!list.length) {
         grid.innerHTML = '<div class="empty glass"><span class="empty-glyph">空</span>' +
-          "<b>没有找到相关的来信</b><p>换个词，或者点「全部」看看别的。</p></div>";
+          "<b>没有找到相关的来信</b><p>换个词，或者看看全部来信。</p>" +
+          '<button class="btn btn--tonal ripple" type="button" data-reset>查看全部来信</button></div>';
         return;
       }
 
@@ -364,6 +376,17 @@
         renderList();
       });
     }
+
+    // 空结果里的一键重置
+    grid.addEventListener("click", function (e) {
+      if (!e.target.closest("[data-reset]")) return;
+      state.tag = "全部";
+      state.query = "";
+      if (searchEl) searchEl.value = "";
+      if (searchField) searchField.classList.remove("has-value");
+      renderFilters();
+      renderList();
+    });
 
     if (searchEl) {
       searchEl.addEventListener("input", function () {
@@ -525,6 +548,42 @@
       var desc = $('meta[name="description"]');
       if (desc) desc.setAttribute("content", post.excerpt);
 
+      // 文章页的分享信息与结构化数据在运行时补齐
+      var pageUrl = SITE_BASE + "post.html?slug=" + encodeURIComponent(post.slug);
+      var coverUrl = post.cover ? SITE_BASE + post.cover : SITE_BASE + "assets/img/letter.jpg";
+
+      function setMeta(sel, value) {
+        var el = $(sel);
+        if (el) el.setAttribute("content", value);
+      }
+
+      var canonical = $("#canonical-link");
+      if (canonical) canonical.setAttribute("href", pageUrl);
+      setMeta("#og-title", post.title + " | " + SITE_NAME);
+      setMeta("#og-description", post.excerpt);
+      setMeta("#og-url", pageUrl);
+      setMeta("#og-image", coverUrl);
+
+      if (!document.getElementById("post-jsonld")) {
+        var ld = {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: post.title,
+          description: post.excerpt,
+          datePublished: post.date,
+          author: { "@type": "Person", name: SITE_NAME },
+          publisher: { "@type": "Person", name: SITE_NAME },
+          mainEntityOfPage: pageUrl,
+          url: pageUrl,
+          image: coverUrl
+        };
+        var ldEl = document.createElement("script");
+        ldEl.type = "application/ld+json";
+        ldEl.id = "post-jsonld";
+        ldEl.textContent = JSON.stringify(ld);
+        document.head.appendChild(ldEl);
+      }
+
       var kicker = $("#post-kicker");
       if (kicker) kicker.textContent = (post.tags || [])[0] || "随笔";
 
@@ -580,6 +639,29 @@
             ? '<a class="next" href="post.html?slug=' + encodeURIComponent(older.slug) + '"><small>下一篇 ' + ICON.arrow +
               "</small><span>" + esc(older.title) + "</span></a>"
             : '<span class="nav-empty">已经是最后一封了</span>');
+      }
+
+      // 相关文章：优先取共享标签的其他来信
+      var relatedEl = $("#related");
+      if (relatedEl) {
+        var related = POSTS.filter(function (p) {
+          if (p.slug === post.slug) return false;
+          return (p.tags || []).some(function (t) {
+            return (post.tags || []).indexOf(t) > -1;
+          });
+        }).slice(0, 2);
+
+        if (!related.length) {
+          relatedEl.hidden = true;
+        } else {
+          relatedEl.hidden = false;
+          relatedEl.innerHTML = '<h2 class="related-title">也许你还想读<span>Related</span></h2>' +
+            '<div class="related-grid">' + related.map(function (p) {
+              return '<a class="related-card paper" href="post.html?slug=' + encodeURIComponent(p.slug) + '">' +
+                "<small>" + fmtDate(p.date) + " · " + readingTime(p) + " 分钟</small>" +
+                "<b>" + esc(p.title) + "</b><span>" + esc(p.excerpt) + "</span></a>";
+            }).join("") + "</div>";
+        }
       }
 
       // 目录

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /404.html
+
+Sitemap: https://949487.github.io/shan-jian-lai-xin/sitemap.xml

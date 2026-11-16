@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>山间来信</title>
+    <link>https://949487.github.io/shan-jian-lai-xin/</link>
+    <description>不追热点，只写还在心里的事。记录日常、城市、记忆与植物的生活随笔。</description>
+    <language>zh-CN</language>
+    <lastBuildDate>16 Nov 2026 08:00:00 +0800</lastBuildDate>
+    <atom:link href="https://949487.github.io/shan-jian-lai-xin/feed.xml" rel="self" type="application/rss+xml"/>
+
+    <item>
+      <title>清晨六点的菜市场</title>
+      <link>https://949487.github.io/shan-jian-lai-xin/post.html?slug=morning-market</link>
+      <guid isPermaLink="true">https://949487.github.io/shan-jian-lai-xin/post.html?slug=morning-market</guid>
+      <pubDate>14 Sep 2026 08:00:00 +0800</pubDate>
+      <category>生活</category>
+      <category>城市</category>
+      <description>六点差十分，卷帘门一扇接一扇地响。菜市场比闹钟更早知道天亮，也比任何人都更早开始一天的交易。</description>
+    </item>
+
+    <item>
+      <title>一封没有寄出的信</title>
+      <link>https://949487.github.io/shan-jian-lai-xin/post.html?slug=unsent-letter</link>
+      <guid isPermaLink="true">https://949487.github.io/shan-jian-lai-xin/post.html?slug=unsent-letter</guid>
+      <pubDate>22 Aug 2026 08:00:00 +0800</pubDate>
+      <category>记忆</category>
+      <description>信写完了，邮票也贴好了，只差走进邮局。三年过去，它还在抽屉最底下，和一叠旧票据待在一起。</description>
+    </item>
+
+    <item>
+      <title>阳台上的第七盆植物</title>
+      <link>https://949487.github.io/shan-jian-lai-xin/post.html?slug=seventh-plant</link>
+      <guid isPermaLink="true">https://949487.github.io/shan-jian-lai-xin/post.html?slug=seventh-plant</guid>
+      <pubDate>30 Jul 2026 08:00:00 +0800</pubDate>
+      <category>植物</category>
+      <description>前六盆都死了。第七盆是一株薄荷，我没有更用心，只是学会了少管一点。</description>
+    </item>
+
+    <item>
+      <title>雨天，旧书店</title>
+      <link>https://949487.github.io/shan-jian-lai-xin/post.html?slug=rainy-bookstore</link>
+      <guid isPermaLink="true">https://949487.github.io/shan-jian-lai-xin/post.html?slug=rainy-bookstore</guid>
+      <pubDate>18 Jun 2026 08:00:00 +0800</pubDate>
+      <category>城市</category>
+      <description>为了躲雨推开一扇半开的木门，出来时雨停了，手里多了一本 1987 年的旧书，扉页上有一行别人的字。</description>
+    </item>
+
+    <item>
+      <title>父亲的自行车</title>
+      <link>https://949487.github.io/shan-jian-lai-xin/post.html?slug=fathers-bicycle</link>
+      <guid isPermaLink="true">https://949487.github.io/shan-jian-lai-xin/post.html?slug=fathers-bicycle</guid>
+      <pubDate>09 May 2026 08:00:00 +0800</pubDate>
+      <category>家人</category>
+      <description>那辆二八大杠在楼道里靠了十几年。轮胎瘪了，链条锈了，车铃按下去，还是会响。</description>
+    </item>
+  </channel>
+</rss>
