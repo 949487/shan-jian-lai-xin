@@ -16,7 +16,7 @@
   <meta property="og:image" content="https://949487.github.io/shan-jian-lai-xin/assets/img/letter.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/style.css?v=10">
+  <link rel="stylesheet" href="assets/css/style.css?v=11">
   <script>
     (function () {
       document.documentElement.classList.add("js");
@@ -97,7 +97,7 @@
         <div>
           <div class="eyebrow">Daily reading</div>
           <h2 id="daily-title">今日一文</h2>
-          <p>每天零点换一篇公有领域的旧文。文字据通行版本校录，读慢一点。</p>
+          <p>每天零点从「每日一文」选一篇短文，也可以顺手抽一篇随机读。</p>
         </div>
         <p class="result-meta" id="daily-date"></p>
       </div>
@@ -109,9 +109,18 @@
           <p class="daily-author" id="daily-author"></p>
         </header>
         <div class="daily-body" id="daily-body"></div>
+        <button class="daily-expand ripple" id="daily-expand" type="button" hidden>展开全文</button>
         <footer class="daily-foot">
           <span id="daily-source"></span>
-          <span class="daily-count" id="daily-count"></span>
+          <div class="daily-actions">
+            <span class="daily-count" id="daily-count"></span>
+            <button class="daily-shuffle" id="daily-shuffle" type="button" aria-label="随机读一篇短文">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M17 3h4v4M21 3l-5 5M3 7h4l10 10h4M17 21h4v-4M21 21l-5-5M3 17h4l3-3"/>
+              </svg>
+              <span>随机一文</span>
+            </button>
+          </div>
         </footer>
       </article>
     </section>
@@ -181,6 +190,6 @@
 
   <script src="data/daily.js?v=4"></script>
   <script src="data/posts.js?v=4"></script>
-  <script src="assets/js/main.js?v=5"></script>
+  <script src="assets/js/main.js?v=6"></script>
 </body>
 </html>

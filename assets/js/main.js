@@ -464,6 +464,150 @@
     $("#daily-count").textContent = "第 " + (idx + 1) + " / " + list.length + " 篇";
   }
 
+  /* ---------------- 每日一文 / 随机一文（qhsou 接口） ---------------- */
+  var ONE_API = "https://api.qhsou.com/api/one.php";
+  var oneItem = null;
+  var oneExpanded = false;
+  var oneRandom = false;
+
+  function oneParagraphs(text) {
+    return String(text || "").replace(/\r/g, "").split(/\n+/).map(function (s) {
+      return s.replace(/^[\s\u3000]+|[\s\u3000]+$/g, "");
+    }).filter(Boolean);
+  }
+
+  function oneCacheKey() { return "one:" + dayKey(); }
+
+  function fetchOne() {
+    var ctrl = window.AbortController ? new AbortController() : null;
+    var timer = ctrl ? window.setTimeout(function () { ctrl.abort(); }, 8000) : null;
+
+    return fetch(ONE_API + "?t=" + Date.now(), ctrl
+      ? { signal: ctrl.signal, cache: "no-store" }
+      : { cache: "no-store" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("one " + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        if (!data || !data.title || !data.content) throw new Error("one empty");
+        return {
+          title: String(data.title),
+          author: String(data.author || "佚名"),
+          content: String(data.content)
+        };
+      })
+      .then(function (item) {
+        if (timer) window.clearTimeout(timer);
+        return item;
+      }, function (err) {
+        if (timer) window.clearTimeout(timer);
+        throw err;
+      });
+  }
+
+  function renderOne(item, opts) {
+    opts = opts || {};
+    oneItem = item;
+    oneExpanded = !!opts.expanded;
+    oneRandom = !!opts.random;
+
+    var paras = oneParagraphs(item.content);
+    var total = paras.join("").length;
+    var shown = [];
+    var sum = 0;
+
+    // 首屏只放约 900 字，剩下的交给「展开全文」，避免长篇小说把首页撑得太长
+    for (var i = 0; i < paras.length; i++) {
+      shown.push(paras[i]);
+      sum += paras[i].length;
+      if (!oneExpanded && sum >= 880) break;
+    }
+    var truncated = shown.length < paras.length;
+
+    $("#daily-era").textContent = oneRandom ? "随机一文 · 短篇" : "每日一文 · 选读";
+    $("#daily-title-text").textContent = item.title;
+    $("#daily-author").textContent = item.author;
+    $("#daily-body").innerHTML = shown.map(function (p) {
+      return "<p>" + esc(p) + "</p>";
+    }).join("");
+    $("#daily-source").textContent = "来源 · 每日一文 qhsou.com";
+    $("#daily-count").textContent = "共约 " + Math.max(1, Math.round(total / 100)) * 100 + " 字";
+
+    var btn = $("#daily-expand");
+    if (btn) {
+      btn.hidden = !truncated && !oneExpanded;
+      btn.textContent = oneExpanded ? "收起" : "展开全文";
+    }
+
+    var dateEl = $("#daily-date");
+    if (dateEl) {
+      if (oneRandom) {
+        dateEl.textContent = "随机抽读 · 再点一次换一篇";
+      } else {
+        var d = cstNow();
+        dateEl.textContent = d.getUTCFullYear() + "." + pad2(d.getUTCMonth() + 1) + "." +
+          pad2(d.getUTCDate()) + " · 周" + "日一二三四五六".charAt(d.getUTCDay());
+      }
+    }
+  }
+
+  function readOneCache() {
+    try {
+      var raw = localStorage.getItem(oneCacheKey());
+      var data = raw ? JSON.parse(raw) : null;
+      if (data && data.title && data.content) return data;
+    } catch (e) {}
+    return null;
+  }
+
+  function initOne() {
+    var card = $("#daily-card");
+    if (!card || !window.fetch) return;
+
+    var cached = readOneCache();
+    if (cached) { renderOne(cached, {}); return; }
+
+    // 每天第一次打开时取一篇并缓存，今天之内保持同一篇
+    fetchOne().then(function (item) {
+      try { localStorage.setItem(oneCacheKey(), JSON.stringify(item)); } catch (e) {}
+      renderOne(item, {});
+    }).catch(function () {
+      // 接口不可用时保留本地公版古文，页面不会空着
+    });
+  }
+
+  function initDailyActions() {
+    var card = $("#daily-card");
+    if (!card) return;
+
+    var shuffle = $("#daily-shuffle");
+    if (shuffle) {
+      shuffle.addEventListener("click", function () {
+        if (shuffle.getAttribute("aria-busy") === "true") return;
+        shuffle.setAttribute("aria-busy", "true");
+        card.classList.add("is-switching");
+
+        fetchOne().then(function (item) {
+          renderOne(item, { random: true });
+        }).catch(function () {
+          toast("随机一文没取到，稍后再试");
+        }).then(function () {
+          card.classList.remove("is-switching");
+          shuffle.removeAttribute("aria-busy");
+        });
+      });
+    }
+
+    var expand = $("#daily-expand");
+    if (expand) {
+      expand.addEventListener("click", function () {
+        if (!oneItem) return;
+        renderOne(oneItem, { random: oneRandom, expanded: !oneExpanded });
+      });
+    }
+  }
+
   function initHeroQuote() {
     var el = $("#hero-quote");
     if (!el) return;
@@ -515,6 +659,8 @@
   }
 
   renderDaily();
+  initOne();
+  initDailyActions();
   initHeroQuote();
 
   /* ---------------- 文章页 ---------------- */

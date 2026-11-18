@@ -931,6 +931,52 @@ time,
   color: var(--on-surface-variant);
 }
 .daily-count { opacity: .7; }
+.daily-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.daily-shuffle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 13px;
+  border: 1px solid var(--glass-border);
+  border-bottom-color: var(--glass-border-dark);
+  border-radius: var(--r-full);
+  background: var(--glass);
+  box-shadow: var(--glass-highlight);
+  color: var(--on-surface-variant);
+  font-size: .68rem;
+  letter-spacing: .08em;
+  transition: color .2s, transform .25s var(--ease-spring), box-shadow .25s;
+}
+.daily-shuffle svg { width: 13px; height: 13px; flex: none; }
+.daily-shuffle:hover {
+  background: var(--glass-accent);
+  color: var(--on-primary-container);
+  transform: translateY(-1px);
+}
+.daily-shuffle[aria-busy="true"] {
+  opacity: .55;
+  pointer-events: none;
+}
+.daily-expand {
+  margin-top: 16px;
+  padding: 0 0 2px;
+  border: 0;
+  border-bottom: 1px dashed var(--primary);
+  background: none;
+  color: var(--primary);
+  font-size: .78rem;
+  letter-spacing: .06em;
+}
+.daily-expand:hover { opacity: .7; }
+.daily-head,
+.daily-body { transition: opacity .22s; }
+.daily-card.is-switching .daily-head,
+.daily-card.is-switching .daily-body { opacity: .35; }
 
 @media (max-width: 680px) {
   .daily-card { padding: 28px 22px 22px; border-radius: var(--r-lg); }
